@@ -1,3 +1,22 @@
-sfnaslfn
-asknflsakng
-najnsfsa
+- name: Inspur ESXI Installation
+  hosts: inspur
+  connection: local
+  gather_facts: no
+  vars:
+    inspur:
+      host: "{{ ansible_host}}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+ 
+  tasks:
+
+  - name: "Get timestamp from the system"
+    shell: "date +%Y-%m-%d:%H-%M-%S"
+    register: tstamp
+    run_once: true
+
+  - name: "Log File"
+    shell:
+      cmd: "touch /inspur-ansible/log/kurulum-{{ tstamp.stdout}}.log"
+    delegate_to: localhost
+    run_once: true
