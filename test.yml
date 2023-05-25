@@ -10,23 +10,7 @@
  
   tasks:
 
-  - name: "Ping Inspur"
-    shell:
-      cmd: "ping -c1 -w 2 {{ansible_host}}"
-    register: pingged_host
-    ignore_errors: true
-    #delegate_to: localhost
-
-  - name: "Result ILO reachability"
-    debug:
-      msg: "{{ansible_host}} > Ping Sonucu Basarili."
-    when: pingged_host.rc == 0
-  - local_action: shell date +%Y-%m-%d:%H-%M-%S |tr -d '\n' >>/inspur-ansible/log/kurulum-{{ tstamp.stdout}}.log && echo -e " {{inventory_hostname}} < Inspur Ping Sonucu Basarili. {{ansible_host}}" >> /inspur-ansible/log/kurulum-{{ tstamp.stdout}}.log
-    when: pingged_host.rc == 0
-    
-  - name: "Result ILO reachability"
-    debug:
-      msg: "{{ansible_host}} > Ping Sonucu Hata Verdi."
-    when: pingged_host.rc != 0
-  - local_action: shell date +%Y-%m-%d:%H-%M-%S |tr -d '\n' >>/inspur-ansible/log/kurulum-{{ tstamp.stdout}}.log && echo -e " ERROR {{inventory_hostname}} < Inspur Ping Sonucu Basarisiz. {{ansible_host}}" >> /inspur-ansible/log/kurulum-{{ tstamp.stdout}}.log
-    when: pingged_host.rc != 0
+  - name: "Get power status"
+    inspur.ispim.power_status_info:
+      provider: "{{ inspur }}"
+    register: power_info
