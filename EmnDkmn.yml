@@ -1,0 +1,30 @@
+- name: Inspur Server Config
+  hosts: inspur
+  connection: local
+  gather_facts: no
+  vars:
+    inspur:
+      host: "{{ ansible_host}}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+
+  tasks:
+
+  # Local Kullanıcı Ayarı
+
+
+  # Kullanici Adı Değiştirme
+
+
+  # Kullanici Ekleme
+
+  - name: "Add user"
+    inspur.ispim.user:
+      state: "present"
+      uname: "PAM_LOCAL_VMFSY"
+      upass: "abcd+1234"
+      role_id: "Administrator"
+      priv: "kvm,sol,vmm"
+      email: "thydcm@thy.com"
+      access: "Enable"
+      provider: "{{ inspur }}"
