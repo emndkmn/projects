@@ -15,7 +15,7 @@
       cmd: "ping -c1 -w 2 {{ansible_host}}"
     register: pingged_host
     ignore_errors: true
-    delegate_to: localhost
+    #delegate_to: localhost
 
   - name: "Result ILO reachability"
     debug:
